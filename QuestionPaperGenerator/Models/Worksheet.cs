@@ -10,8 +10,14 @@ namespace QuestionPaperGenerator.Models
     [Table("WorksheetMaster")]
     public class Worksheet
     {
+        public Worksheet()
+        {
+            this.QuestionPatterns = new List<QuestionPattern>();
+        }
         public int Id { get; set; }
         [Required]
         public String WorksheetName { get; set; }
+        public virtual ICollection<QuestionPattern> QuestionPatterns { get; set; }
+
     }
 }
