@@ -1,39 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using QuestionPaperGenerator;
-using QuestionPaperGenerator.Models;
 
 namespace QuestionPaperGenerator.Controllers
 {
     public class WorksheetController : Controller
     {
-        private AppDbContext db = new AppDbContext();
-
         // GET: Worksheet
         public ActionResult Index()
         {
-            return View(db.Worksheets.ToList());
+            return View();
         }
 
         // GET: Worksheet/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Worksheet worksheet = db.Worksheets.Find(id);
-            if (worksheet == null)
-            {
-                return HttpNotFound();
-            }
-            return View(worksheet);
+            return View();
         }
 
         // GET: Worksheet/Create
@@ -43,86 +27,63 @@ namespace QuestionPaperGenerator.Controllers
         }
 
         // POST: Worksheet/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,WorksheetName")] Worksheet worksheet)
+        public ActionResult Create(FormCollection collection)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Worksheets.Add(worksheet);
-                db.SaveChanges();
+                // TODO: Add insert logic here
+
                 return RedirectToAction("Index");
             }
-
-            return View(worksheet);
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: Worksheet/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Worksheet worksheet = db.Worksheets.Find(id);
-            if (worksheet == null)
-            {
-                return HttpNotFound();
-            }
-            return View(worksheet);
+            return View();
         }
 
         // POST: Worksheet/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,WorksheetName")] Worksheet worksheet)
+        public ActionResult Edit(int id, FormCollection collection)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(worksheet).State = EntityState.Modified;
-                db.SaveChanges();
+                // TODO: Add update logic here
+
                 return RedirectToAction("Index");
             }
-            return View(worksheet);
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: Worksheet/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Worksheet worksheet = db.Worksheets.Find(id);
-            if (worksheet == null)
-            {
-                return HttpNotFound();
-            }
-            return View(worksheet);
+            return View();
         }
 
         // POST: Worksheet/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            Worksheet worksheet = db.Worksheets.Find(id);
-            db.Worksheets.Remove(worksheet);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
             }
-            base.Dispose(disposing);
+            catch
+            {
+                return View();
+            }
         }
     }
 }
