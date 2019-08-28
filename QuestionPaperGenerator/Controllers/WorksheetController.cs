@@ -1,13 +1,16 @@
-﻿using System;
+﻿using QuestionPaperGenerator.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using QuestionPaperGenerator.ViewModels;
 
 namespace QuestionPaperGenerator.Controllers
 {
     public class WorksheetController : Controller
     {
+        AppDbContext db = new AppDbContext();
         // GET: Worksheet
         public ActionResult Index()
         {
@@ -21,25 +24,33 @@ namespace QuestionPaperGenerator.Controllers
         }
 
         // GET: Worksheet/Create
-        public ActionResult Create()
+        public ActionResult AddWorksheet()
         {
+            List<SelectListItem> selectListItems = new List<SelectListItem>();
+            List<Template> templates = db.Templates.ToList();
+            List<int> maxFrequencies = new List<int>();
+            foreach (var template in templates)
+            {
+                selectListItems.Add(new SelectListItem() { Text = template.Name, Value = template.Id.ToString() });
+            }
+            ViewBag.Templates = selectListItems;
             return View();
         }
 
         // POST: Worksheet/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(WorksheetViewModel worksheetView)
         {
-            try
+            Worksheet worksheet = new Worksheet {WorksheetName=worksheetView.Worksheet.WorksheetName };
+            for(var i=0;i<worksheetView.QuestionPatterns.Count;i++)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                QuestionPattern question = new QuestionPattern();
+                question = worksheetView.QuestionPatterns[i];
+                worksheet.QuestionPatterns.Add(question);
             }
-            catch
-            {
-                return View();
-            }
+            db.Worksheets.Add(worksheet);
+            db.SaveChanges();
+            return View();
         }
 
         // GET: Worksheet/Edit/5

@@ -1,0 +1,105 @@
+﻿@model QuestionPaperGenerator.ViewModels.WorksheetViewModel
+
+@{
+    ViewBag.Title = "AddWorksheet";
+}
+
+<h2>AddWorksheet</h2>
+
+
+@using (Html.BeginForm("Create","Worksheet",FormMethod.Post,new { id="worksheetForm"}))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Worksheet</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Worksheet.WorksheetName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Worksheet.WorksheetName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Worksheet.WorksheetName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Templates, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+
+            @Html.DropDownList("Templates", null, "Select Class", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Templates.SingleOrDefault().Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Frequency :", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.QuestionPatterns.FirstOrDefault().Frequency, new { htmlAttributes = new { @id = "Frequency", @class = "form-control", min = 0 } })
+            @Html.ValidationMessageFor(model => model.QuestionPatterns.FirstOrDefault().Frequency, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Marks :", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.QuestionPatterns.FirstOrDefault().Marks, new { htmlAttributes = new { @id = "Marks", @class = "form-control" ,min=0} })
+            @Html.ValidationMessageFor(model => model.QuestionPatterns.FirstOrDefault().Marks, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div><input type="button" name="Add" value="Add" class="btn btn-primary" onclick="AddVariable()" /></div>
+
+    <script>
+        function setLable(selectedId, frequency, marks) {
+            var form = $("#worksheetForm");
+
+            $("<Label>").text("Name : " + selectedId + " Frequency : " + frequency + " Marks : " + marks).appendTo(form);
+            $("<br>").appendTo(form);
+
+
+        }
+
+        var count = 0;
+        function AddVariable() {
+            var selectedId = $("#Templates").val();
+            var frequency = $("#Frequency").val();
+            var marks = $("#Marks").val();
+            setLable(selectedId,frequency,marks);
+            var form = $("#worksheetForm");
+            $('<input>').attr({
+                type: 'hidden',
+                name: "QuestionPatterns[" + count + "].Template_Id",
+                value: selectedId
+            }).appendTo(form);
+
+            $('<input>').attr({
+                type: 'hidden',
+                name: "QuestionPatterns[" + count + "].Frequency",
+                value: frequency
+            }).appendTo(form);
+
+            $('<input>').attr({
+                type: 'hidden',
+                name: "QuestionPatterns[" + count + "].Marks",
+                value: marks
+            }).appendTo(form);
+            count++;
+        }
+
+
+
+    </script>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
