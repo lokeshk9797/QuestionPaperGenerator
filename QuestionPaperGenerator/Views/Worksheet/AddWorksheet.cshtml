@@ -48,10 +48,10 @@
     <div><input type="button" name="Add" value="Add" class="btn btn-primary" onclick="AddVariable()" /></div>
 
     <script>
-        function setLable(selectedId, frequency, marks) {
+        function setLable(selectedName, frequency, marks) {
             var form = $("#worksheetForm");
 
-            $("<Label>").text("Name : " + selectedId + " Frequency : " + frequency + " Marks : " + marks).appendTo(form);
+            $("<Label>").text("Name of Template : " + selectedName + " Frequency of Template : " + frequency + " Marks per Question : " + marks).appendTo(form);
             $("<br>").appendTo(form);
 
 
@@ -62,7 +62,9 @@
             var selectedId = $("#Templates").val();
             var frequency = $("#Frequency").val();
             var marks = $("#Marks").val();
-            setLable(selectedId,frequency,marks);
+            var selectedName = $("#Templates option:selected").text();
+
+            setLable(selectedName,frequency,marks);
             var form = $("#worksheetForm");
             $('<input>').attr({
                 type: 'hidden',

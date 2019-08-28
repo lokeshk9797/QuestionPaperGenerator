@@ -35,7 +35,7 @@
     <div class="form-group">
             @Html.LabelFor(model => model.Variables, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <select id="VariableSelectList" name="SelectedEntry" onchange="valueSelected()">
+                <select id="VariableSelectList" name="SelectedEntry" onchange="valueSelected()" class="form-control">
                     <option value="">Select a Variable</option>
                 </select>
                @* @Html.DropDownList(model=>model.SelectedId, "Select Class", new { @class = "form-control" })*@
