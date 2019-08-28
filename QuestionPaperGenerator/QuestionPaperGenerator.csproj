@@ -132,6 +132,7 @@
     <Compile Include="Controllers\QuestionGeneratorController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\WorksheetController.cs" />
+    <Compile Include="Engine\QuestionGeneratorEngine.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -190,6 +191,7 @@
     <Content Include="Views\Template\Create.cshtml" />
     <Content Include="Views\Worksheet\AddWorksheet.cshtml" />
     <Content Include="Views\QuestionGenerator\GetWorksheet.cshtml" />
+    <Content Include="Views\QuestionGenerator\GeneratePaper.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

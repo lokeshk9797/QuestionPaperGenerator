@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using QuestionPaperGenerator.Engine;
 
 namespace QuestionPaperGenerator.Controllers
 {
@@ -37,10 +38,16 @@ namespace QuestionPaperGenerator.Controllers
         [HttpPost]
         public ActionResult GetWorksheet(int Worksheets)
         {
-            var worksheets = db.Worksheets.Where(s=>s.Id==Worksheets).FirstOrDefault().WorksheetName;
-            List<Template> templates = db.Templates.ToList();
+            return RedirectToAction("GeneratePaper", "QuestionGenerator",new {worksheet= Worksheets });
+        }
+
+
+        public ActionResult GeneratePaper(int worksheet)
+        {
+            Worksheet worksheets = db.Worksheets.Where(s=>s.Id==worksheet).FirstOrDefault();
             
-            var questionPatterns = db.QuestionPatterns.Where(s => s.Worksheet_Id == Worksheets).ToList();
+            
+             worksheets.QuestionPatterns= db.QuestionPatterns.Where(s => s.Worksheet_Id == worksheet).ToList();
             //var templates = db.Templates.ToList();
             //List<Template> selectedTemplates = new List<Template>();
             //foreach(var questionPattern in questionPatterns)
@@ -53,17 +60,12 @@ namespace QuestionPaperGenerator.Controllers
             //foreach(var template in selectedTemplates){
             //    selectedVariables.Add(variables.Where(s => s.Template_Id == template.Id).FirstOrDefault());
             //}
-            
-
-
-            return RedirectToAction("GeneratePaper");
+            QuestionGeneratorEngine questionGeneratorEngine = new QuestionGeneratorEngine();
+            questionGeneratorEngine.GeneratorEngine(worksheets);
+            return View(worksheets);
         }
 
-        public ActionResult GeneratePaper(string worksheetName)
-        {
-
-            return View();
-        }
+       
 
         // POST: QuestionGenerator/Create
         [HttpPost]
