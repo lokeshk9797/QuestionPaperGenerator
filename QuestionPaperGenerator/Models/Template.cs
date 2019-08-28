@@ -25,7 +25,7 @@ namespace QuestionPaperGenerator.Models
         public int MaxFrequency { get; set; }
 
         public virtual ICollection<Variable> Variables { get; set; }
-        public virtual ICollection<QuestionPattern> QuestionPatterns{ get; set; }
+        
         //[^{\}]+(?=})
 
     }
