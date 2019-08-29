@@ -24,6 +24,7 @@ namespace QuestionPaperGenerator.Engine
                 String QuestionName = question.Template.Name.ToString();
                 GetVariables(question);
             }
+
             return QuestionPaper;
 
         }
@@ -44,14 +45,14 @@ namespace QuestionPaperGenerator.Engine
             int noOfVariablesInFirstNumber = Regex.Matches(result[0].ToString(), @"[^{\}]+(?=})").Count;
             for(var i = 0; i < question.Frequency; i++)
             {
-                GetNumbers(variables, noOfVariablesInFirstNumber,operatorInside.ToString());
+                GetNumbers(variables, noOfVariablesInFirstNumber,operatorInside.ToString(),question.Marks);
 
             }
 
 
         }
 
-        public void GetNumbers(List<Variable> Variables,int noOfVariablesInFirstNumber,string operatorInside)
+        public void GetNumbers(List<Variable> Variables,int noOfVariablesInFirstNumber,string operatorInside,int marks)
         {
             var count = Variables.Count();
             int firstNumber = 0;
@@ -70,7 +71,7 @@ namespace QuestionPaperGenerator.Engine
                     secondNumber += Convert.ToInt32(RandNum * Math.Pow(10, i - noOfVariablesInFirstNumber));
                 }
             }
-            QuestionModel question = new QuestionModel() { FirstOperand = firstNumber, SecondOperand = secondNumber, Operator = operatorInside };
+            QuestionModel question = new QuestionModel() { FirstOperand = firstNumber, SecondOperand = secondNumber, Operator = operatorInside,Marks=marks };
             QuestionPaper.Questions.Add(question);
             
         }

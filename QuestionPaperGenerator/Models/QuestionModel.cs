@@ -10,5 +10,6 @@ namespace QuestionPaperGenerator.Models
         public int FirstOperand { get; set; }
         public int SecondOperand { get; set; }
         public String Operator { get; set; }
+        public int Marks { get; set; }
     }
 }
