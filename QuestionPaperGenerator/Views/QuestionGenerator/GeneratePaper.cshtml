@@ -1,4 +1,4 @@
-﻿@model QuestionPaperGenerator.Models.Worksheet
+﻿@model QuestionPaperGenerator.ViewModels.QuestionPaperViewModel
 
 @{
     ViewBag.Title = "GeneratePaper";
@@ -7,27 +7,39 @@
 <h2>GeneratePaper</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Worksheet</h4>
         <hr />
        
         
-            @Model.WorksheetName
-            @{ 
-                foreach( var question in Model.QuestionPatterns)
+           @Model.PaperName
+       
+
+        <table>
+            @{ foreach (var question in Model.Questions)
                 {
-                    <p>@question.Template.Name</p>
-                    
+                    <tr>
+                        <td><label>@question.FirstOperand</label></td>
+                        <td><label>@question.Operator</label></td>
+                        <td><label>@question.SecondOperand</label></td>
+                        <td><input type="text" /></td>
+                    </tr>
+                    }
                 }
-            }
+        </table>
+                             
+
+
+         
+        
         
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Submit" class="btn btn-primary" />
             </div>
         </div>
     </div>

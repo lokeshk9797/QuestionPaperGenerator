@@ -145,6 +145,7 @@
       <DependentUpon>201908272008084_AddedMaxFrequency.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\QuestionPattern.cs" />
     <Compile Include="Models\Template.cs" />
     <Compile Include="Models\Variable.cs" />

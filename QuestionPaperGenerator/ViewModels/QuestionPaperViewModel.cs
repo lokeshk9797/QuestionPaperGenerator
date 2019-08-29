@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using QuestionPaperGenerator.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,9 +9,11 @@ namespace QuestionPaperGenerator.ViewModels
 {
     public class QuestionPaperViewModel
     {
+        public QuestionPaperViewModel()
+        {
+            this.Questions = new List<QuestionModel>();
+        }
         public String PaperName { get; set; }
-        public int MyProperty { get; set; }
-        public List<int[]> Operands { get; set; }
-        public List<string> Operators { get; set; }
+        public List<QuestionModel> Questions { get; set; }
     }
 }

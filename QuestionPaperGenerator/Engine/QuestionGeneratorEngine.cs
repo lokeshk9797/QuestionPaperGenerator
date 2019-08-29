@@ -3,6 +3,7 @@ using QuestionPaperGenerator.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Web;
 
@@ -57,7 +58,9 @@ namespace QuestionPaperGenerator.Engine
             int secondNumber = 0;
             for (var i = 0; i < count; i++)
             {
-                var RandNum = new Random().Next(Variables.ElementAt(i).MinValue, Variables.ElementAt(i).MaxValue);
+                //int RandNum = new Random().Next(Variables.ElementAt(i).MinValue, Variables.ElementAt(i).MaxValue);
+                int RandNum = NextRandom(Variables.ElementAt(i).MinValue, Variables.ElementAt(i).MaxValue);
+
                 if (i < noOfVariablesInFirstNumber)
                 {
                     firstNumber += Convert.ToInt32(RandNum * Math.Pow(10, i));
@@ -67,8 +70,24 @@ namespace QuestionPaperGenerator.Engine
                     secondNumber += Convert.ToInt32(RandNum * Math.Pow(10, i - noOfVariablesInFirstNumber));
                 }
             }
-            QuestionPaper.Operands.Add(new int[] { firstNumber, secondNumber });
-            QuestionPaper.Operators.Add(operatorInside);
+            QuestionModel question = new QuestionModel() { FirstOperand = firstNumber, SecondOperand = secondNumber, Operator = operatorInside };
+            QuestionPaper.Questions.Add(question);
+            
+        }
+
+        public static int NextRandom(int min, int max)
+        {
+            if (min >= max)
+            {
+                throw new ArgumentException("Min value is greater or equals than Max value.");
+            }
+            byte[] intBytes = new byte[4];
+            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetNonZeroBytes(intBytes);
+            }
+            return min + Math.Abs(BitConverter.ToInt32(intBytes, 0)) % (max - min + 1);
         }
     }
+
 }
