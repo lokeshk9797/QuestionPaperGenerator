@@ -1,4 +1,5 @@
 ﻿using QuestionPaperGenerator.Models;
+using QuestionPaperGenerator.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,47 +11,64 @@ namespace QuestionPaperGenerator.Engine
 {
     public class QuestionGeneratorEngine
     {
-        public List<int[][]> numbers = new List<int[][]>();
-        public List<int[][]>  GeneratorEngine(Worksheet worksheet)
+        public List<int[]> numbers = new List<int[]>();
+        QuestionPaperViewModel QuestionPaper = new QuestionPaperViewModel();
+
+        public QuestionPaperViewModel  GeneratorEngine(Worksheet worksheet)
         {
-            var name = worksheet.WorksheetName;
+            QuestionPaper.PaperName = worksheet.WorksheetName;
             for(var i=0;i<worksheet.QuestionPatterns.Count;i++)
             {
                 QuestionPattern question = worksheet.QuestionPatterns.ElementAt(i);
                 String QuestionName = question.Template.Name.ToString();
-                GetNumbers(question);
+                GetVariables(question);
             }
-            return numbers;
+            return QuestionPaper;
 
         }
-        public void GetNumbers(QuestionPattern question)
+        public void GetVariables(QuestionPattern question)
         {
             
             var count = question.Template.Variables.Count();
+            var variables = question.Template.Variables.ToList();
             string formula = question.Template.Formula.ToString();
-            var ArrayOfVariables = Regex.Matches(formula, @"[^{\}]+(?=})").Cast<Match>().Select(m=>m.Value).ToList();
+            //var ArrayOfVariables = Regex.Matches(formula, @"[^{\}]+(?=})").Cast<Match>().Select(m=>m.Value).ToList();
                    
             Regex operatorRegexPattern = new Regex(@"(\+|-|\*|\/)");
             Match operatorInside = operatorRegexPattern.Match(formula);
 
-            var indexOfOperator=operatorInside.Index;
+            string[] result = Regex.Split(formula, operatorRegexPattern.ToString());
 
-            foreach(var match in ArrayOfVariables)
-            {
-                
-            }
-           
 
-            foreach (var variable in question.Template.Variables)
+            int noOfVariablesInFirstNumber = Regex.Matches(result[0].ToString(), @"[^{\}]+(?=})").Count;
+            for(var i = 0; i < question.Frequency; i++)
             {
-                var RandNum = new Random().Next(variable.MinValue,variable.MaxValue);
-                
+                GetNumbers(variables, noOfVariablesInFirstNumber,operatorInside.ToString());
 
             }
-            //var firstNumber = numbers.ElementAt(0) * 10 + numbers.ElementAt(1);
 
-            //var SecondNumbr = numbers.ElementAt(2) *10 + numbers.ElementAt(3); 
 
+        }
+
+        public void GetNumbers(List<Variable> Variables,int noOfVariablesInFirstNumber,string operatorInside)
+        {
+            var count = Variables.Count();
+            int firstNumber = 0;
+            int secondNumber = 0;
+            for (var i = 0; i < count; i++)
+            {
+                var RandNum = new Random().Next(Variables.ElementAt(i).MinValue, Variables.ElementAt(i).MaxValue);
+                if (i < noOfVariablesInFirstNumber)
+                {
+                    firstNumber += Convert.ToInt32(RandNum * Math.Pow(10, i));
+                }
+                else
+                {
+                    secondNumber += Convert.ToInt32(RandNum * Math.Pow(10, i - noOfVariablesInFirstNumber));
+                }
+            }
+            QuestionPaper.Operands.Add(new int[] { firstNumber, secondNumber });
+            QuestionPaper.Operators.Add(operatorInside);
         }
     }
 }

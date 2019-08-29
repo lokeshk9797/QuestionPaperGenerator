@@ -150,6 +150,7 @@
     <Compile Include="Models\Variable.cs" />
     <Compile Include="Models\Worksheet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\QuestionPaperViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
     <Compile Include="ViewModels\WorksheetViewModel.cs" />
   </ItemGroup>
