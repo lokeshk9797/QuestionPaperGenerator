@@ -1,4 +1,5 @@
 ﻿using QuestionPaperGenerator.Models;
+using QuestionPaperGenerator.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,15 +62,15 @@ namespace QuestionPaperGenerator.Controllers
             //    selectedVariables.Add(variables.Where(s => s.Template_Id == template.Id).FirstOrDefault());
             //}
             QuestionGeneratorEngine questionGeneratorEngine = new QuestionGeneratorEngine();
-            questionGeneratorEngine.GeneratorEngine(worksheets);
-            return View(worksheets);
+            QuestionPaperViewModel questionPaper= questionGeneratorEngine.GeneratorEngine(worksheets);
+            return View(questionPaper);
         }
 
        
 
         // POST: QuestionGenerator/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult GeneratePaper(QuestionPaperViewModel questionPaperWithAnswers)
         {
             try
             {

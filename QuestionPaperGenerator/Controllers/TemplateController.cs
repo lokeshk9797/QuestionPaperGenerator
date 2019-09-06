@@ -47,7 +47,7 @@ namespace QuestionPaperGenerator.Controllers
             }
             db.Templates.Add(template);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Home");
 
 
         }

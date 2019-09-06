@@ -5,9 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css")
+
     @Scripts.Render("~/bundles/modernizr")
+   
+
+
 </head>
 <body>
+    @*<div class="sidebar">
+        <ul class="sidebar">
+            <li>@Html.ActionLink("Add Template", "Create", "Template")</li>
+            <li>@Html.ActionLink("Add Worksheet", "AddWorksheet", "Worksheet")</li>
+            <li>@Html.ActionLink("Generate Paper", "GetWorksheet", "QuestionGenerator")</li>
+        </ul>
+    </div>
+    
+
+    <input type="checkbox" id="sidebar-btn" class="sidebar-btn" checked />
+    <label for="sidebar-btn"></label>*@
+
+    
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -16,22 +34,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Question Paper Generator", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Create Template", "Create", "Template")</li>
+                    <li>@Html.ActionLink("Create Worksheet", "AddWorksheet", "Worksheet")</li>
+                    <li>@Html.ActionLink("Generate Paper", "GetWorksheet", "QuestionGenerator")</li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="main-body">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p >&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
 
