@@ -29,8 +29,8 @@
                             <td><label>@question.Operator</label></td>
                             <td><label>@question.SecondOperand</label></td>
                             <td><label>=</label></td>
-                            <td><input type="text" id="Answer+@count" onchange="CheckAnswer(@question.FirstOperand,'@question.Operator',@question.SecondOperand,@question.Marks)" /></td>
-                            <td><label>@question.Marks</label></td>
+                            <td>@Html.Editor("question.Answer")</td>
+                            <td><label>@question.Mark</label></td>
                         </tr>
                         count++;
                     }
@@ -40,7 +40,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Result" class="btn btn-primary" onclick="DisplayMarks()" />
+                <input type="submit" value="Result" class="btn btn-primary"/>
             </div>
         </div>
         <div id="Score"></div>
@@ -57,11 +57,11 @@
 }
 <script>
     var Marks = 0;
-    
-    function CheckAnswer(Operand1, Operator, Operand2, Mark) {
+   
+    function CheckAnswer(Operand1, Operator, Operand2, Mark,Count) {
         var CorrectAnswer = eval(Operand1 + Operator + Operand2);
         
-        var UsersAnswer = $("#Answer+'count'").val();
+        var UsersAnswer = $("#Answer+"+Count).val();
 
         if (CorrectAnswer == UsersAnswer) {
             Marks += Mark;

@@ -50,7 +50,7 @@ namespace QuestionPaperGenerator.Controllers
             }
             db.Worksheets.Add(worksheet);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Worksheet/Edit/5

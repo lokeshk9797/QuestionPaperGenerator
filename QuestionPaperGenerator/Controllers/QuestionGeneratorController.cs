@@ -70,7 +70,7 @@ namespace QuestionPaperGenerator.Controllers
 
         // POST: QuestionGenerator/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult GeneratePaper(QuestionPaperViewModel questionPaperWithAnswers)
         {
             try
             {

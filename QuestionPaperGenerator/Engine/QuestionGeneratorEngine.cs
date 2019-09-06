@@ -71,7 +71,7 @@ namespace QuestionPaperGenerator.Engine
                     secondNumber += Convert.ToInt32(RandNum * Math.Pow(10, i - noOfVariablesInFirstNumber));
                 }
             }
-            QuestionModel question = new QuestionModel() { FirstOperand = firstNumber, SecondOperand = secondNumber, Operator = operatorInside,Marks=marks };
+            QuestionModel question = new QuestionModel() { FirstOperand = firstNumber, SecondOperand = secondNumber, Operator = operatorInside,Mark=marks };
             QuestionPaper.Questions.Add(question);
             
         }
